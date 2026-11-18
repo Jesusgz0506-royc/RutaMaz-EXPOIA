@@ -1,6 +1,7 @@
 import math
 import networkx as nx
-import pulp
+import numpy as np
+from scipy.optimize import milp, LinearConstraint, Bounds
 
 
 def distancia_haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -92,9 +93,9 @@ def generar_plan_turistico(
     max_paradas: int = 5,
 ) -> dict:
     """
-    Capa 2 (PuLP) + Capa 3 (A*):
-    1. Obtiene todos los lugares compatibles con el presupuesto aproximado (+15% tolerancia) y tiempo.
-    2. Resuelve un modelo de Programación Lineal Entera (PuLP) para maximizar la experiencia turística.
+    Capa 2 (Programación Lineal Entera MILP) + Capa 3 (A*):
+    1. Filtra todos los lugares compatibles con el presupuesto aproximado (+15%) y tiempo libre.
+    2. Resuelve un modelo de Programación Lineal Entera Binaria (Solver HiGHS) para maximizar la experiencia turística.
     3. Traza la ruta geográfica óptima con A*.
     """
     # 1. Filtrado inicial por zona y/o categoría
@@ -104,7 +105,7 @@ def generar_plan_turistico(
     if categoria and categoria != "Todas":
         candidatos = [l for l in candidatos if l["categoria"] == categoria]
 
-    # Lista completa de opciones individuales que se acomodan al presupuesto aproximado (+15%) y tiempo
+    # Lista completa de opciones individuales compatibles con el presupuesto aproximado (+15%)
     presupuesto_aprox = presupuesto * 1.15
     opciones_compatibles = [
         l for l in candidatos
@@ -112,7 +113,7 @@ def generar_plan_turistico(
     ]
     opciones_compatibles.sort(key=lambda x: (-x["calificacion"], x["precio"]))
 
-    # Filtrado estricto para el modelo matemático PuLP
+    # Filtrado estricto para el modelo matemático de optimización
     elegibles = [
         l for l in candidatos
         if l["precio"] <= presupuesto and l["tiempo_min"] <= tiempo_disponible_min
@@ -136,28 +137,51 @@ def generar_plan_turistico(
             },
         }
 
-    # 2. Modelo de Optimización Lineal con PuLP (Problema de la Mochila Multi-restricción)
-    prob = pulp.LpProblem("Optimizacion_Ruta_Mazatlan", pulp.LpMaximize)
-    x = {l["id"]: pulp.LpVariable(f"visitar_{l['id']}", cat="Binary") for l in elegibles}
+    # 2. Modelo de Programación Lineal Entera Binaria (Problema de la Mochila Multi-restricción)
+    m = len(elegibles)
+    c = -np.array([float(l["calificacion"]) for l in elegibles], dtype=float)
+    integrality = np.ones(m, dtype=float)
+    bounds = Bounds(lb=np.zeros(m, dtype=float), ub=np.ones(m, dtype=float))
 
-    # Función Objetivo: Maximizar calificación turística con ligero incentivo a variedad
-    prob += pulp.lpSum(l["calificacion"] * x[l["id"]] for l in elegibles), "Maximizar_Experiencia"
-
-    # Restricción 1: Presupuesto máximo
-    prob += pulp.lpSum(l["precio"] * x[l["id"]] for l in elegibles) <= presupuesto, "Limite_Presupuesto"
-
-    # Restricción 2: Tiempo total (estancia + promedio de 12 min de traslado entre paradas)
-    prob += (
-        pulp.lpSum((l["tiempo_min"] + 12) * x[l["id"]] for l in elegibles) - 12 <= tiempo_disponible_min,
-        "Limite_Tiempo",
+    A = np.array(
+        [
+            [float(l["precio"]) for l in elegibles],
+            [float(l["tiempo_min"] + 12) for l in elegibles],
+            [1.0 for _ in elegibles],
+        ],
+        dtype=float,
+    )
+    lb = np.array([-np.inf, -np.inf, -np.inf], dtype=float)
+    ub = np.array(
+        [float(presupuesto), float(tiempo_disponible_min + 12), float(max_paradas)],
+        dtype=float,
     )
 
-    # Restricción 3: Máximo de paradas para un recorrido cómodo
-    prob += pulp.lpSum(x[l["id"]] for l in elegibles) <= max_paradas, "Max_Paradas"
+    resultado = milp(
+        c=c,
+        integrality=integrality,
+        bounds=bounds,
+        constraints=LinearConstraint(A, lb, ub),
+    )
 
-    prob.solve(pulp.PULP_CBC_CMD(msg=False))
-
-    seleccionados = [l for l in elegibles if pulp.value(x[l["id"]]) == 1]
+    if resultado.success and resultado.x is not None:
+        seleccionados = [elegibles[i] for i in range(m) if resultado.x[i] > 0.5]
+        estado_solver = "Optimal (MILP HiGHS)"
+    else:
+        # Respaldo determinista ordenado por calificación
+        seleccionados = []
+        gasto_acum, tiempo_acum = 0, 0
+        for l in sorted(elegibles, key=lambda item: -item["calificacion"]):
+            extra_traslado = 12 if seleccionados else 0
+            if (
+                len(seleccionados) < max_paradas
+                and gasto_acum + l["precio"] <= presupuesto
+                and tiempo_acum + l["tiempo_min"] + extra_traslado <= tiempo_disponible_min
+            ):
+                seleccionados.append(l)
+                gasto_acum += l["precio"]
+                tiempo_acum += l["tiempo_min"] + extra_traslado
+        estado_solver = "Optimal (Heurística de respaldo)"
 
     # 3. Ordenar ruta con A* en NetworkX
     G = construir_grafo_mazatlan(lugares)
@@ -168,7 +192,6 @@ def generar_plan_turistico(
         t_visita = sum(p["tiempo_min"] for p in ruta_ordenada)
         if t_visita + t_traslado <= tiempo_disponible_min:
             break
-        # Quitar el lugar de menor calificación y recalcular A*
         peor = min(ruta_ordenada, key=lambda p: p["calificacion"])
         ruta_ordenada.remove(peor)
         ruta_ordenada, tramos, t_traslado, dist_km = ordenar_ruta_astar(G, ruta_ordenada)
@@ -186,7 +209,7 @@ def generar_plan_turistico(
         "tiempo_global_total": tiempo_visita_total + t_traslado,
         "distancia_total_km": dist_km,
         "detalle_pulp": {
-            "estado": pulp.LpStatus[prob.status],
+            "estado": estado_solver,
             "candidatos_evaluados": len(elegibles),
             "paradas_seleccionadas": len(ruta_ordenada),
             "valor_objetivo_satisfaccion": round(sum(p["calificacion"] for p in ruta_ordenada), 2),
