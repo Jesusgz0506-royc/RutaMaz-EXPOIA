@@ -1,0 +1,314 @@
+{
+  "zonas": {
+    "El Faro e Isla de la Piedra": {
+      "color": "#2A9D8F",
+      "poligono": [[23.188, -106.430], [23.188, -106.390], [23.172, -106.390], [23.172, -106.430]]
+    },
+    "Centro Histórico y Olas Altas": {
+      "color": "#E63946",
+      "poligono": [[23.206, -106.430], [23.206, -106.416], [23.189, -106.416], [23.189, -106.430]]
+    },
+    "Malecón": {
+      "color": "#F4A261",
+      "poligono": [[23.240, -106.443], [23.240, -106.420], [23.207, -106.420], [23.207, -106.443]]
+    },
+    "Zona Dorada": {
+      "color": "#E9C46A",
+      "poligono": [[23.268, -106.470], [23.268, -106.444], [23.241, -106.444], [23.241, -106.470]]
+    },
+    "Cerritos y Marina": {
+      "color": "#457B9D",
+      "poligono": [[23.318, -106.500], [23.318, -106.458], [23.269, -106.458], [23.269, -106.500]]
+    }
+  },
+  "lugares": [
+    {
+      "id": 1,
+      "nombre": "Faro de Mazatlán (Cerro del Crestón)",
+      "zona": "El Faro e Isla de la Piedra",
+      "categoria": "mirador",
+      "lat": 23.1783,
+      "lon": -106.4255,
+      "precio": 30,
+      "tiempo_min": 90,
+      "calificacion": 9.7,
+      "descripcion": "Subida panorámica al faro natural más alto en operación con vista de 360 grados."
+    },
+    {
+      "id": 2,
+      "nombre": "Mirador de Cristal",
+      "zona": "El Faro e Isla de la Piedra",
+      "categoria": "mirador",
+      "lat": 23.1779,
+      "lon": -106.4261,
+      "precio": 50,
+      "tiempo_min": 30,
+      "calificacion": 9.4,
+      "descripcion": "Puente con piso transparente en la cima del Cerro del Crestón."
+    },
+    {
+      "id": 3,
+      "nombre": "Embarcadero Isla de la Piedra",
+      "zona": "El Faro e Isla de la Piedra",
+      "categoria": "playa",
+      "lat": 23.1842,
+      "lon": -106.4135,
+      "precio": 60,
+      "tiempo_min": 40,
+      "calificacion": 8.8,
+      "descripcion": "Cruce en lancha tradicional hacia las playas tranquilas de la isla."
+    },
+    {
+      "id": 4,
+      "nombre": "Palapas Isla de la Piedra",
+      "zona": "El Faro e Isla de la Piedra",
+      "categoria": "mariscos",
+      "lat": 23.1795,
+      "lon": -106.3980,
+      "precio": 300,
+      "tiempo_min": 150,
+      "calificacion": 9.5,
+      "descripcion": "Pescado zarandeado, aguachile y cocos fríos frente al mar."
+    },
+    {
+      "id": 5,
+      "nombre": "Plazuela Machado",
+      "zona": "Centro Histórico y Olas Altas",
+      "categoria": "cultura",
+      "lat": 23.1979,
+      "lon": -106.4239,
+      "precio": 150,
+      "tiempo_min": 60,
+      "calificacion": 9.5,
+      "descripcion": "Corazón cultural del Centro Histórico rodeado de arquitectura colonial y cafés."
+    },
+    {
+      "id": 6,
+      "nombre": "Teatro Ángela Peralta",
+      "zona": "Centro Histórico y Olas Altas",
+      "categoria": "cultura",
+      "lat": 23.1973,
+      "lon": -106.4233,
+      "precio": 100,
+      "tiempo_min": 45,
+      "calificacion": 9.2,
+      "descripcion": "Recinto histórico del siglo XIX con recorridos guiados y galerías."
+    },
+    {
+      "id": 7,
+      "nombre": "Paseo Olas Altas y Monumento al Venadito",
+      "zona": "Centro Histórico y Olas Altas",
+      "categoria": "mirador",
+      "lat": 23.1956,
+      "lon": -106.4267,
+      "precio": 0,
+      "tiempo_min": 40,
+      "calificacion": 9.0,
+      "descripcion": "Tramo clásico junto al mar ideal para caminar y ver el atardecer."
+    },
+    {
+      "id": 8,
+      "nombre": "El Clavadista de Mazatlán",
+      "zona": "Centro Histórico y Olas Altas",
+      "categoria": "cultura",
+      "lat": 23.2007,
+      "lon": -106.4272,
+      "precio": 50,
+      "tiempo_min": 30,
+      "calificacion": 9.1,
+      "descripcion": "Espectáculo tradicional de saltos desde el acantilado hacia las rocas."
+    },
+    {
+      "id": 9,
+      "nombre": "Mariscos El Torito (Centro)",
+      "zona": "Centro Histórico y Olas Altas",
+      "categoria": "mariscos",
+      "lat": 23.2015,
+      "lon": -106.4215,
+      "precio": 250,
+      "tiempo_min": 75,
+      "calificacion": 9.3,
+      "descripcion": "Tostadas de ceviche, paté de marlín y cocteles frescos a precio accesible."
+    },
+    {
+      "id": 10,
+      "nombre": "Catedral Basílica de Mazatlán",
+      "zona": "Centro Histórico y Olas Altas",
+      "categoria": "cultura",
+      "lat": 23.2025,
+      "lon": -106.4211,
+      "precio": 0,
+      "tiempo_min": 30,
+      "calificacion": 8.8,
+      "descripcion": "Templo emblemático con torres neogóticas frente a la Plazuela República."
+    },
+    {
+      "id": 11,
+      "nombre": "Gran Acuario Mazatlán Mar de Cortés",
+      "zona": "Malecón",
+      "categoria": "entretenimiento",
+      "lat": 23.2268,
+      "lon": -106.4275,
+      "precio": 380,
+      "tiempo_min": 150,
+      "calificacion": 9.8,
+      "descripcion": "El acuario más grande de México con exhibiciones del Mar de Cortés y pingüinario."
+    },
+    {
+      "id": 12,
+      "nombre": "Monumento a la Familia",
+      "zona": "Malecón",
+      "categoria": "mirador",
+      "lat": 23.2312,
+      "lon": -106.4334,
+      "precio": 0,
+      "tiempo_min": 30,
+      "calificacion": 8.9,
+      "descripcion": "Punto fotográfico clásico sobre el Malecón con brisa marina."
+    },
+    {
+      "id": 13,
+      "nombre": "Letras de Mazatlán (Valentinos)",
+      "zona": "Malecón",
+      "categoria": "mirador",
+      "lat": 23.2372,
+      "lon": -106.4398,
+      "precio": 0,
+      "tiempo_min": 30,
+      "calificacion": 9.2,
+      "descripcion": "Parador fotográfico icónico donde inicia la Zona Dorada."
+    },
+    {
+      "id": 14,
+      "nombre": "Mariscos Bahía",
+      "zona": "Malecón",
+      "categoria": "mariscos",
+      "lat": 23.2131,
+      "lon": -106.4222,
+      "precio": 280,
+      "tiempo_min": 75,
+      "calificacion": 9.1,
+      "descripcion": "Mariscos tradicionales sinaloenses a pasos del Malecón."
+    },
+    {
+      "id": 15,
+      "nombre": "Monumento al Pescador",
+      "zona": "Malecón",
+      "categoria": "mirador",
+      "lat": 23.2098,
+      "lon": -106.4239,
+      "precio": 0,
+      "tiempo_min": 25,
+      "calificacion": 8.7,
+      "descripcion": "Escultura histórica símbolo de la actividad pesquera del puerto."
+    },
+    {
+      "id": 16,
+      "nombre": "Playa Gaviotas",
+      "zona": "Zona Dorada",
+      "categoria": "playa",
+      "lat": 23.2465,
+      "lon": -106.4522,
+      "precio": 100,
+      "tiempo_min": 120,
+      "calificacion": 9.4,
+      "descripcion": "Playa amplia con oleaje moderado, renta de palapas y vista a las tres islas."
+    },
+    {
+      "id": 17,
+      "nombre": "El Muchacho Alegre (Zona Dorada)",
+      "zona": "Zona Dorada",
+      "categoria": "mariscos",
+      "lat": 23.2435,
+      "lon": -106.4488,
+      "precio": 450,
+      "tiempo_min": 90,
+      "calificacion": 9.5,
+      "descripcion": "Restaurante de mariscos frente al mar con ambiente de banda sinaloense."
+    },
+    {
+      "id": 18,
+      "nombre": "Mariscos La Jaiba Pata Salada",
+      "zona": "Zona Dorada",
+      "categoria": "mariscos",
+      "lat": 23.2510,
+      "lon": -106.4565,
+      "precio": 320,
+      "tiempo_min": 80,
+      "calificacion": 9.2,
+      "descripcion": "Especialidades en aguachiles, tacos gobernador y molcajetes de mariscos."
+    },
+    {
+      "id": 19,
+      "nombre": "Cruce a Isla de Venados (Punta Sábalo)",
+      "zona": "Zona Dorada",
+      "categoria": "playa",
+      "lat": 23.2642,
+      "lon": -106.4665,
+      "precio": 250,
+      "tiempo_min": 180,
+      "calificacion": 9.6,
+      "descripcion": "Traslado en lancha o kayak a reserva ecológica con aguas cristalinas."
+    },
+    {
+      "id": 20,
+      "nombre": "Mercado de Artesanías Zona Dorada",
+      "zona": "Zona Dorada",
+      "categoria": "cultura",
+      "lat": 23.2478,
+      "lon": -106.4510,
+      "precio": 200,
+      "tiempo_min": 45,
+      "calificacion": 8.5,
+      "descripcion": "Recuerdos locales, dulces de coco, ropa de playa y artesanías."
+    },
+    {
+      "id": 21,
+      "nombre": "Playa Brujas",
+      "zona": "Cerritos y Marina",
+      "categoria": "playa",
+      "lat": 23.2985,
+      "lon": -106.4892,
+      "precio": 150,
+      "tiempo_min": 120,
+      "calificacion": 9.3,
+      "descripcion": "Playa favorita para surf y caminatas largas en la zona norte."
+    },
+    {
+      "id": 22,
+      "nombre": "Mariscos Los Arcos (Marina)",
+      "zona": "Cerritos y Marina",
+      "categoria": "mariscos",
+      "lat": 23.2775,
+      "lon": -106.4695,
+      "precio": 420,
+      "tiempo_min": 90,
+      "calificacion": 9.4,
+      "descripcion": "Gastronomía de mariscos de alta calidad en la zona de la Marina."
+    },
+    {
+      "id": 23,
+      "nombre": "Paseo por Marina Mazatlán",
+      "zona": "Cerritos y Marina",
+      "categoria": "mirador",
+      "lat": 23.2730,
+      "lon": -106.4640,
+      "precio": 100,
+      "tiempo_min": 60,
+      "calificacion": 8.9,
+      "descripcion": "Malecón interno rodeado de yates, cafeterías y vista tranquila."
+    },
+    {
+      "id": 24,
+      "nombre": "Playa Cerritos",
+      "zona": "Cerritos y Marina",
+      "categoria": "playa",
+      "lat": 23.3110,
+      "lon": -106.4945,
+      "precio": 100,
+      "tiempo_min": 120,
+      "calificacion": 9.1,
+      "descripcion": "Zona costera amplia y relajada al norte de Mazatlán."
+    }
+  ]
+}

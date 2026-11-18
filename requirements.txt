@@ -1,0 +1,7 @@
+streamlit
+folium
+streamlit-folium
+networkx
+pulp
+scikit-learn
+google-genai
